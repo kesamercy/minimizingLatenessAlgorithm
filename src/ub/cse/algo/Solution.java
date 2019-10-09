@@ -23,12 +23,33 @@ public class Solution {
         ArrayList<int[]> schedule = new ArrayList<int[]>();
         ArrayList<int[]> tempRallies = new ArrayList<int[]>();
         tempRallies.addAll(_rallies);
+        int startTime = 0;
+        int endTime = 0;
+        int duration = 0;
+        int deadline = 1;
         //change the name unsortedarrayList to something more meangingful
 
        mergeSort(_rallies);
 
-        System.out.println(_rallies);
+        for (int i = 0; i <_n_rallies; i++) {
+            int supposedFinishTime = _rallies.get(i)[deadline];
+            int [] assignedRally = new int[2];
+            endTime = startTime + _rallies.get(i)[duration];
+            int rallyId = tempRallies.indexOf(_rallies.get(i));
 
+            assignedRally[0] = rallyId;
+            assignedRally[1] = startTime;
+            schedule.add(assignedRally);
+            startTime = endTime;
+
+            if (i == _n_rallies- 1 ) {
+                int lateness = supposedFinishTime - endTime;
+                if (lateness < 0) {
+                    schedule.clear();
+                    return schedule;
+                }
+            }
+        }
         return schedule;
     }
 
@@ -37,7 +58,7 @@ public class Solution {
     }
 
     public static void doMergeSort(ArrayList<int[]> unsortedRallies){
-        ArrayList<int[]> sortedRallies = new ArrayList<int[]>();
+
         int middle;
         ArrayList<int[]> left = new ArrayList<>();
         ArrayList<int[]> right = new ArrayList<>();
