@@ -21,98 +21,74 @@ public class Solution {
      */
     public ArrayList<int[]> getSchedule(){
         ArrayList<int[]> schedule = new ArrayList<int[]>();
+        //get a temp copy of the orginial arrayList
+        //change the name unsortedarrayList to something more meangingful
 
-        System.out.println("the number of the deadline " + _rallies.get(2)[1]);
-
-        //use the merge sort algorithm to sort the arraylist then proceed with the other part of the program
-
-
+       mergeSort(_rallies);
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //sort the schedule by the deadline, the earliest deadline should come first ascending order
-
-        //create a temp schedule and copy elements therre... this is also the one you sort
-        ArrayList<int[]> tempRallies = new ArrayList<int[]>();
-        tempRallies.addAll(_rallies);
-        int durationAndFinishTimeValues = 2;
-
-
-        //the hash map..
-        HashMap<Integer, ArrayList<Integer>> newrallies  = new HashMap<>();
-
-        //the keys should be the deadline
-        for (int i = 0; i < _n_rallies; i++) {
-            //i is the position that should now be in the list of the value
-            System.out.println("the rallies " + _rallies.get(i));
-            for (int j = 0; j < durationAndFinishTimeValues ; j++) {
-//                newrallies.put()
-
-            }
-            for (int values: _rallies.get(i)) {
-
-            }
-
-
-        }
-        for (int []duration: _rallies) {
-
-            for (int finishTime: duration) {
-
-            }
-
-        }
-
-        //the values should be a list, of the orinigal position and the duration
-
-
-        //put this into a hash map and then sort the hashmap
-
-//        she needs to decide in n log n time
-
-//        sort the algorithm first using binary search
-
-        //for every job in i, schedule it from start to finish based on the duration
-
-        //figure out how to get every element in the array
-
-//
-//        Order the jobs in order of their deadlines
-//        Assume for simplicity of notation that d 1 ≤ . . . ≤ d n
-//        Initially, f = s
-//        128
-//        Chapter 4 Greedy Algorithms
-//        Consider the jobs i = 1, . . . , n in this order
-//        Assign job i to the time interval from s(i) = f to f(i) = f + t i
-//        Let f = f + t i
-//                End
-//        Return the set of scheduled intervals [s(i), f(i)] for i = 1, . . . , n
-
-        //make sure that every job finishes before it's suggested end time
-
-        //update the start time after you scheudle a job based on the previous end time.
-
-        //System.out.println("IMPLEMENT ME!");
         return schedule;
+    }
+
+    public static void mergeSort(ArrayList<int[]> unsortedRallies){
+        ArrayList<int[]> sortedRallies = new ArrayList<int[]>();
+        int middle;
+        ArrayList<int[]> left = new ArrayList<int[]>();
+        ArrayList<int[]> right = new ArrayList<int[]>();
+
+        if (!unsortedRallies.isEmpty()) {
+            middle = unsortedRallies.size() / 2;
+
+            for (int i = 0; i < middle; i++){
+                left.add(unsortedRallies.get(i));
+            }
+
+            for (int j = middle; j < unsortedRallies.size(); j++)
+                right.add(unsortedRallies.get(j));
+
+            mergeSort(left);
+            mergeSort(right);
+
+            merge(unsortedRallies, left, right);
+
+        }
+    }
+
+    private static void merge(ArrayList<int[]> unsortedRallies, ArrayList<int[]> left, ArrayList<int[]> right){
+        ArrayList<int[]> temp = new ArrayList<>();
+
+        int numbersIndex = 0;
+        int leftIndex = 0;
+        int rightIndex = 0;
+        int deadline = 1;
+
+        while (leftIndex < left.size() && rightIndex < right.size()) {
+            if (left.get(leftIndex)[deadline] < right.get(rightIndex)[deadline] ) {
+                unsortedRallies.set(numbersIndex, left.get(leftIndex));
+                leftIndex++;
+            } else {
+                unsortedRallies.set(numbersIndex, right.get(rightIndex));
+                rightIndex++;
+            }
+            numbersIndex++;
+        }
+
+        int tempIndex = 0;
+        if (leftIndex >= left.size()) {
+            temp = right;
+            tempIndex = rightIndex;
+        }
+        else {
+            temp = left;
+            tempIndex = leftIndex;
+        }
+
+        for (int i = tempIndex; i < temp.size(); i++) {
+            unsortedRallies.set(numbersIndex, temp.get(i));
+            numbersIndex++;
+        }
     }
 }
