@@ -21,39 +21,41 @@ public class Solution {
      */
     public ArrayList<int[]> getSchedule(){
         ArrayList<int[]> schedule = new ArrayList<int[]>();
-        //get a temp copy of the orginial arrayList
+        ArrayList<int[]> tempRallies = new ArrayList<int[]>();
+        tempRallies.addAll(_rallies);
         //change the name unsortedarrayList to something more meangingful
 
        mergeSort(_rallies);
 
-
-
-
+        System.out.println(_rallies);
 
         return schedule;
     }
 
-    public static void mergeSort(ArrayList<int[]> unsortedRallies){
+    public static void mergeSort(ArrayList<int[]>rallies){
+        doMergeSort(rallies);
+    }
+
+    public static void doMergeSort(ArrayList<int[]> unsortedRallies){
         ArrayList<int[]> sortedRallies = new ArrayList<int[]>();
         int middle;
-        ArrayList<int[]> left = new ArrayList<int[]>();
-        ArrayList<int[]> right = new ArrayList<int[]>();
+        ArrayList<int[]> left = new ArrayList<>();
+        ArrayList<int[]> right = new ArrayList<>();
 
-        if (!unsortedRallies.isEmpty()) {
+        if (unsortedRallies.size() > 1) {
             middle = unsortedRallies.size() / 2;
 
             for (int i = 0; i < middle; i++){
                 left.add(unsortedRallies.get(i));
             }
 
-            for (int j = middle; j < unsortedRallies.size(); j++)
+            for (int j = middle; j < unsortedRallies.size(); j++) {
                 right.add(unsortedRallies.get(j));
-
-            mergeSort(left);
-            mergeSort(right);
+            }
+            doMergeSort(left);
+            doMergeSort(right);
 
             merge(unsortedRallies, left, right);
-
         }
     }
 
