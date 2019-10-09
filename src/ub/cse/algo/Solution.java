@@ -42,13 +42,13 @@ public class Solution {
             schedule.add(assignedRally);
             startTime = endTime;
 
-            if (i == _n_rallies- 1 ) {
-                int lateness = supposedFinishTime - endTime;
-                if (lateness < 0) {
-                    schedule.clear();
-                    return schedule;
-                }
+
+            int lateness = supposedFinishTime - endTime;
+            if (lateness < 0) {
+                schedule.clear();
+                return schedule;
             }
+
         }
         return schedule;
     }
